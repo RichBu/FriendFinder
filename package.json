@@ -1,0 +1,24 @@
+{
+  "name": "friendfinder",
+  "version": "1.0.1",
+  "description": "Friend Finder for on-line matching with mySQL",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RichBu/FriendFinder.git"
+  },
+  "author": "RPB",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RichBu/FriendFinder/issues"
+  },
+  "homepage": "https://github.com/RichBu/FriendFinder#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "path": "^0.12.7"
+  }
+}

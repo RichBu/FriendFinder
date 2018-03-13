@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Nerd Finder</title>
+
+	<!-- Link to the jQuery Library -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+	<!-- Including Font Awesome Icons -->
+	<script src="https://use.fontawesome.com/b38c8ed4c7.js"></script>
+
+	<!-- Link to reset stylesheet -->
+	<link rel="stylesheet" href="css/reset.css">
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Compiled and minified Materialize CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+	<!-- Compiled and minified Materialize JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	<header>
+		<nav>
+			<div class="nav-wrapper green accent-2">
+				<i class="fa fa-address-book-o fa-5x" aria-hidden="true" id=logo-icon></i>
+				<a href="/" class="brand-logo" id="logo">Nerd Finder</a>
+				<ul class="right hide-on-med-and-down" id="head-nav-links">
+					<li>
+						<a href="/survey">Survey</a>
+					</li>
+					<li>
+						<a href="/api/friends">API Friends List</a>
+					</li>
+					<li>
+						<a href="https://github.com/RichBu/FriendFinder">GitHub Repo</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col s12 z-depth-5 mainpanel">
+					<div id="mainpanel-content">
+						<h1>Nerd Questions</h1>
+						<div class="divider"></div>
+
+						<h3>About You</h3>
+
+						<div class="input-field col s6">
+							<h5>Name (Required)</h5>
+							<i class="material-icons prefix">account_circle</i>
+							<input type="text" class="validate" placeholder="Your Name Here" id="userName">
+						</div>
+
+						<div class="input-field col s6">
+							<h5>Link to Photo Image (Required)</h5>
+							<i class="material-icons prefix">picture_in_picture</i>
+							<input type="text" class="validate" placeholder="Photo Link Here" id="userPhoto">
+						</div>
+
+						<!-- Survey Submit Button -->
+						<div>
+							<button class="btn waves-effect waves-light" type="submit" name="action" id="submitButton">Submit Responses
+								<i class="material-icons right">send</i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<footer class="page-footer green accent-2">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">Nerd Finder App</h5>
+					<p class="grey-text text-lighten-4">Survey done.</p>
+				</div>
+				<div class="col l4 offset-l2 s12">
+					<h5 class="white-text">Links</h5>
+					<ul>
+						<li>
+							<a class="grey-text text-lighten-3" href="/api/friends">API Friends List</a>
+						</li>
+						<li>
+							<a class="grey-text text-lighten-3" href="">GitHub Repo</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2018 Rich Budek
+				<a class="grey-text text-lighten-4 right" href="">Reference Work- GitHub</a>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Modal Nerd Friend has matched -->
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+			<h4>Nerd Friend Match</h4>
+			<div class="divider"></div>
+			<h5 id="userMatch"></h5>
+			<img id="userMatchImage" class="materialboxed" width="650" src="">
+		</div>
+		<div class="modal-footer">
+			<a href="/survey" class="modal-action modal-close waves-effect waves-green btn-flat">Try Another Time</a>
+		</div>
+	</div>
+
+	<!-- Modal left answers blank -->
+	<div id="modal-blank" class="modal">
+		<div class="modal-content">
+			<h4>You left some answers blank for the best experience you should fill in all the answers. However, you can continue by clicking
+				the button below</h4>
+			<div class="divider"></div>
+			<button class="btn waves-effect waves-light" type="submit" name="action" id="blankButton">Continue Anyhow
+				<i class="material-icons right">send</i>
+			</button>
+			<button class="btn waves-effect waves-light" type="submit" name="action" id="abortButton">Cancel
+			</button>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var questArray = []; //need scope here so button click can work
+		//need global variable for userInput in case the user wants to 
+		//continue with unanswered questions
+		var userInput = {
+			name: $('#userName').val().trim(),
+			photo: $('#userPhoto').val().trim(),
+			scores: []
+		};
+
+		$(document).ready(function () {
+			var questType = function (_quesText, _ansArray) {
+				this.questText = _quesText;
+				this.ansArray = _ansArray;
+				return
+			};
+			//set up the initial question array. 
+			//want to do in JavaScript versus HTML because easier to change or
+			//at a later date to change the questions to come from the server or file
+			var newQuest;
+			function NewQuest(_quesText, _ansArray) {
+				this.questText = _quesText;
+				this.ansArray = _ansArray;
+			};
+
+			//quest #1
+			newQuest = new NewQuest("Numbers are to math as words are to poetry",
+				[
+					"1 = completely disagree",
+					"2 = mostly disagree",
+					"3 = nuetral",
+					"4 = mostly agree",
+					"5 = always agree"
+				]);
+			questArray.push(newQuest);
+
+			//quest #2
+			newQuest = new NewQuest("How many Stars Wars movies have you seen ?",
+				[
+					"0",
+					"1",
+					"2",
+					"3",
+					"all of them"
+				]);
+			questArray.push(newQuest);
+
+			//quest #3
+			newQuest = new NewQuest("How important is Dr. Who in your life ?",
+				[
+					"1 = not very ",
+					"2 = tiny bit",
+					"3 = somewhat",
+					"4 = very important",
+					"5 = necessary for life"
+				]);
+			questArray.push(newQuest);
+
+			//quest #4
+			newQuest = new NewQuest("Science is more important than music",
+				[
+					"1 = completely disagree",
+					"2 = mostly disagree",
+					"3 = nuetral",
+					"4 = mostly agree",
+					"5 = always agree"
+				]);
+			questArray.push(newQuest);
+
+			//quest #5
+			newQuest = new NewQuest("Numbers are to math as words are to poetry",
+				[
+					"1 = completely disagree",
+					"2 = mostly disagree",
+					"3 = nuetral",
+					"4 = mostly agree",
+					"5 = always agree"
+				]);
+			questArray.push(newQuest);
+
+			//quest #6
+			newQuest = new NewQuest("Dressing up in costumes is fun ",
+				[
+					"1 = completely disagree",
+					"2 = mostly disagree",
+					"3 = nuetral",
+					"4 = mostly agree",
+					"5 = always agree"
+				]);
+			questArray.push(newQuest);
+
+			//quest #7
+			newQuest = new NewQuest("Taking something apart is more fun than using it",
+				[
+					"1 = always agree",
+					"2 = mostly agree",
+					"3 = nuetral",
+					"4 = mostly disagree",
+					"5 = completely disagree",
+				]);
+			questArray.push(newQuest);
+
+			//quest #8
+			newQuest = new NewQuest("How many hours of TV do you watch a week ?",
+				[
+					"0     hours",
+					"5-10  hours",
+					"10-40 hours",
+					"40-50 hours",
+					"50+   hours"
+				]);
+			questArray.push(newQuest);
+
+			//quest #9
+			newQuest = new NewQuest("Reading is more fun than dancing",
+				[
+					"1 = always agree",
+					"2 = mostly agree",
+					"3 = nuetral",
+					"4 = mostly disagree",
+					"5 = completely disagree",
+				]);
+			questArray.push(newQuest);
+
+			//quest #10
+			newQuest = new NewQuest("All my clothes are less than 3 months old",
+				[
+					"1 = completely disagree",
+					"2 = mostly disagree",
+					"3 = nuetral",
+					"4 = mostly agree",
+					"5 = always agree"
+				]);
+			questArray.push(newQuest);
+			var panelDiv = $("#mainpanel-content")
+
+
+			//create all of the questions dynamically from the questArray
+			for (questNum = 0; questNum < questArray.length; questNum++) {
+				var inputDiv = $("<div>");
+				$(inputDiv).addClass("input-field col s12");
+
+				var quesHeadTag = $("<h3>").text("Question " + (questNum + 1));
+				$(quesHeadTag).appendTo(inputDiv);
+				var quesTextTag = $("<h5>").text(questArray[questNum].questText);
+				$(quesTextTag).appendTo(inputDiv);
+
+				var selectTag = $("<select>");
+				$(selectTag).attr("id", "quest" + questNum);
+				var optTag = $("<option>");
+				$(optTag).attr("disabled");
+				$(optTag).attr("selected");
+				$(optTag).text("Choose your option");
+				$(optTag).appendTo(selectTag);
+
+				var endVal = questArray[questNum].ansArray.length;
+				for (var j = 0; j < endVal; j++) {
+					optTag = $("<option>");
+					$(optTag).attr("value", j);
+					$(optTag).text(questArray[questNum].ansArray[j]);
+					$(optTag).appendTo(selectTag);
+				};
+
+				$(selectTag).appendTo(inputDiv);
+				$(inputDiv).appendTo(panelDiv);
+			};
+
+
+			$('select').material_select();
+
+			$('.modal').modal({
+				opacity: .5, // Opacity of modal background
+				startingTop: '4%', // Starting top style attribute
+				endingTop: '10%' // Ending top style attribute
+			});
+
+
+			// $('.modal').modal({
+			// 	dismissible: false, // Modal can be dismissed by clicking outside of the modal
+			// 	opacity: .5, // Opacity of modal background
+			// 	inDuration: 300, // Transition in duration
+			// 	outDuration: 200, // Transition out duration
+			// 	startingTop: '4%', // Starting top style attribute
+			// 	endingTop: '10%' // Ending top style attribute
+			// });
+		});
+
+
+		$('#blankButton').on('click', function (event) {
+			//user clicked they wanted to continue even with blank answers
+			evalFriend();
+		});
+
+
+		var evalFriend = function () {
+			$.post('/api/friends', userInput)
+				.done(function (data) {
+					// console.log('response = ' + JSON.stringify(data));
+
+					// Set the name and image values of friend match
+					$('#userMatch').html(data.matchName);
+					$("#userMatchImage").attr("src", data.matchImage);
+
+					// Pop open the modal dialog
+					$('#modal1').modal('open');
+				});
+		};
+
+
+		$('#abortButton').on('click', function (event) {
+			event.preventDefault();
+			$('#modal-blank').modal('close');
+		});
+	
+
+		// Activate submit button
+		$('#submitButton').on('click', function (event) {
+			event.preventDefault();
+
+			//nove all of the answers to an array
+			//and then everything into an object so that
+			//can pass over thru an API call 
+			userInput.name = $("#userName").val().trim();
+			userInput.photo = $("#userPhoto").val().trim();
+			var missAns = false; //there are no missing answers
+			var endVal = questArray.length;
+			for (var i = 0; i < endVal; i++) {
+				var inpStr = $("#quest" + i);
+				var inpVal = inpStr.val().trim();
+				//if the answer is greater than 
+				if (inpVal.length > 1) { 
+					inpVal = "BLANK";
+					missAns = true; 
+				};
+				userInput.scores.push(inpVal);
+			};
+			console.log(userInput);
+
+			if (missAns === true) {
+				$('#modal-blank').modal('open');
+			} else {
+				//call the function to evaluate the closest friend
+				evalFriend();
+			};
+
+		});
+	</script>
+</body>
+
+</html>
