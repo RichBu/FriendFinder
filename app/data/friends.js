@@ -4,43 +4,11 @@ var friendsArray = [
 		name: 'Einstein',
 		photo: 'images/Einstein.png',
 		scores: [
-			'1',
 			'5',
 			'5',
-			'1',
 			'5',
 			'5',
-			'1',
-			'1',
-			'1',
-			'5'
-		]
-	},
-	{
-		name: 'Kim Kardashin',
-		photo: 'images/Kardashin',
-		scores: [
-			'2',
-			'4',
-			'1',
-			'1',
-			'1',
-			'1',
-			'1',
-			'2',
-			'1',
-			'5'
-		]
-	},
-	{
-		name: 'Earl',
-		photo: 'http://cdn3-www.cattime.com/assets/uploads/2011/08/best-kitten-names-1.jpg',
-		scores: [
-			'4',
-			'3',
 			'5',
-			'1',
-			'1',
 			'5',
 			'5',
 			'1',
@@ -49,19 +17,51 @@ var friendsArray = [
 		]
 	},
 	{
+		name: 'Kim Kardashin',
+		photo: 'images/Kardashin.png',
+		scores: [
+			'1',
+			'1',
+			'1',
+			'5',
+			'5',
+			'5',
+			'5',
+			'5',
+			'1',
+			'5'
+		]
+	},
+	{
+		name: 'Elaine',
+		photo: 'images/Elaine.png',
+		scores: [
+			'5',
+			'5',
+			'5',
+			'3',
+			'5',
+			'4',
+			'4',
+			'2',
+			'3',
+			'2'
+		]
+	},
+	{
 		name: 'Dr. Who',
 		photo: 'images/DrWho.png',
 		scores: [
 			'5',
-			'1',
-			'2',
-			'1',
+			'5',
+			'5',
 			'3',
+			'5',
 			'4',
-			'1',
+			'4',
+			'2',
 			'3',
-			'3',
-			'4'
+			'2'
 		]
 	},
 	{
