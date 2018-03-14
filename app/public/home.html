@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Nerd Finder</title>
 
 	<!-- Link to the jQuery Library -->
-  	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
-  	<!-- Including Font Awesome Icons -->
-  	<script src="https://use.fontawesome.com/b38c8ed4c7.js"></script>
+	<!-- Including Font Awesome Icons -->
+	<script src="https://use.fontawesome.com/b38c8ed4c7.js"></script>
 
 	<!-- Link to reset stylesheet -->
 	<link rel="stylesheet" href="css/reset.css">
 
 	<!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- Compiled and minified Materialize CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
 
 	<!-- Compiled and minified Materialize JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-          
+
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -29,11 +30,17 @@
 		<nav>
 			<div class="nav-wrapper green accent-2">
 				<i class="fa fa-address-book-o fa-5x" aria-hidden="true" id=logo-icon></i>
-				<a href="/" class="brand-logo" id="logo">Friend Finder</a>
+				<a href="/" class="brand-logo" id="logo">Nerd Finder</a>
 				<ul class="right hide-on-med-and-down" id="head-nav-links">
-					<li><a href="/survey">Survey</a></li>
-					<li><a href="/api/friends">API Friends List</a></li>
-					<li><a href="https://github.com/RichBu/FriendFinder">GitHub Repo</a></li>
+					<li>
+						<a href="/survey">Survey</a>
+					</li>
+					<li>
+						<a href="/api/friends">API Friends List</a>
+					</li>
+					<li id="aboutOpen">
+						<a href="">About</a>
+						</lsi>
 				</ul>
 			</div>
 		</nav>
@@ -63,17 +70,71 @@
 			<div class="row">
 				<div class="col l6 s12">
 					<h5 class="white-text">Nerd Finder</h5>
-					<p class="grey-text text-lighten-4">Thanks for trying this out. This is for fun only  :-].</p>
+					<p class="grey-text text-lighten-4">Thanks for trying this out. This is for fun only :-].</p>
 				</div>
 				<div class="col l4 offset-l2 s12">
 					<h5 class="white-text">Links</h5>
 					<ul>
-						<li><a class="grey-text text-lighten-3" href="/api/friends">API Friends List</a></li>
-						<li><a class="grey-text text-lighten-3" href="https://github.com/angrbrd/friend-finder">GitHub Repo</a></li>
+						<li>
+							<a class="grey-text text-lighten-3" href="/api/friends">API Friends List</a>
+						</li>
+						<li>
+							<a class="grey-text text-lighten-3" href="">GitHub Repo</a>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
+
+
+		<!-- Modal about  -->
+		<div id="modal-about" class="modal">
+			<div class="modal-content">
+				<h4>Nerd Finder by Rich Budek</h4>
+				<div class="divider"></div>
+				<h5>This is an app for amusement only
+					<br/>
+					<br/>It is a multi-user app deployed on-line that takes users responses and stores them in a local page.
+					<br/>
+					<br/>Though not a dabase it is sufficient to store past users and compare them to future ones.
+					<br/>
+					<br/>The data stored is just the users name and is for demo purposes only.
+				</h5>
+				<button class="btn waves-effect waves-light btn-close-about" id="abortButton2">Close
+					<i class="material-icons right" style="font-size: 20px">close</i>
+				</button>
+				<button class="btn waves-effect waves-light right" id="techInfoButton">Tech Info
+					<i class="material-icons right" style="font-size: 20px">info</i>
+				</button>
+			</div>
+		</div>
+
+		<!-- Modal about tech -->
+		<div id="modal-about-tech" class="modal">
+			<div class="modal-content">
+				<h5>Technical info</h5>
+				<div class="divider"></div>
+				<h6>by Rich Budek
+					<br/>to demonstrate dynamic page programing
+					<br/>
+					<br/> Front end receives dynamic pages from NODE JS files
+					<br/> Backend on a NODE JS server
+					<br/> Server.JS app on backend is a REST API by Rich Budek
+					<br/> Java Script back end.
+					<br/> Communication between front end and back end is done with GET and PUT
+					<br/> Answers are stored in a local JSON text file.
+					<br/> CSS Styling by Materialize.
+					<br/> All HTML and CSS coding done manually by Rich Budek
+					<br/>
+				</h6>
+				<div class="divider"></div>
+				<button class="btn waves-effect waves-light btn-close-about" id="abortButton3">Close
+					<i class="material-icons right" style="font-size: 20px">close</i>
+				</button>
+			</div>
+		</div>
+
+
 		<!--
 		<div class="footer-copyright">
 			<div class="container">
@@ -84,5 +145,44 @@
 	-->
 	</footer>
 
+	<script>
+
+		$(document).ready(function () {
+			event.preventDefault();
+
+			$('.modal').modal({
+				dismissible: false, // Modal can be dismissed by clicking outside of the modal
+				opacity: .5, // Opacity of modal background
+				inDuration: 300, // Transition in duration
+				outDuration: 200, // Transition out duration
+				startingTop: '4%', // Starting top style attribute
+				endingTop: '10%' // Ending top style attribute
+			});
+
+
+
+			$('#abortButton').on('click', function (event) {
+				event.preventDefault();
+				$('#modal-blank').modal('close');
+			});
+
+			$('#techInfoButton').on('click', function (event) {
+				event.preventDefault();
+				$('#modal-about-tech').modal('open');
+			});
+
+			$('#aboutOpen').on('click', function (event) {
+				event.preventDefault();
+				$('#modal-about').modal('open');
+			});
+
+			$('.btn-close-about').on('click', function (event) {
+				event.preventDefault();
+				$('#modal-about').modal('close');
+				$('#modal-about-tech').modal('close');
+			});
+		});
+	</script>
 </body>
+
 </html>

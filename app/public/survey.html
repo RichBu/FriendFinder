@@ -57,13 +57,15 @@
 						<h3>About You</h3>
 
 						<div class="input-field col s6">
-							<h5>Name (Required)</h5>
+							<h5>Name
+								<br/>(Required)</h5>
 							<i class="material-icons prefix">account_circle</i>
 							<input type="text" class="validate" placeholder="Your Name Here" id="userName">
 						</div>
 
 						<div class="input-field col s6">
-							<h5>Link to Photo Image (Required)</h5>
+							<h5>Link to Photo
+								<br/>Image (Required)</h5>
 							<i class="material-icons prefix">picture_in_picture</i>
 							<input type="text" class="validate" placeholder="Photo Link Here" id="userPhoto">
 						</div>
@@ -141,7 +143,7 @@
 				<i class="material-icons right" style="font-size: 50px">warning</i>
 			</h4>
 			<div class="divider"></div>
-			<button class="btn waves-effect waves-light red accent-1" type="submit" name="action" id="closeBlankNameButton">Continue
+			<button class="btn waves-effect waves-light red accent-1 close-modal-warn" type="submit" name="action" id="closeBlankNameButton">Continue
 			</button>
 		</div>
 	</div>
@@ -155,24 +157,77 @@
 			<div class="divider"></div>
 			<h6>for testing just type anything in, just don't leave it blank</h6>
 			<div class="divider"></div>
-			<button class="btn waves-effect waves-light red accent-1" type="submit" name="action" id="closeBlankPhotoButton">Continue
+			<button class="btn waves-effect waves-light red accent-1 close-modal-warn">Continue
 			</button>
 		</div>
 	</div>
 
-	<!-- Modal about blank -->
+	<!-- Modal all blank answers blank -->
+	<div id="modal-blank-fool" class="modal red accent-2">
+		<div class="modal-content">
+			<h4>
+				<i class="material-icons left" style="font-size: 50px">warning</i>
+				FOOL
+				<i class="material-icons right" style="font-size: 50px">warning</i>
+			</h4>
+			<div class="divider"></div>
+			<img class="materialboxed" width="150" src="images/MrT_fool.png">
+			<div class="divider"></div>
+			<h6>Do you take me to be a fool ?
+				<br/> How am I supposed to match you up with not a single answer ?
+			</h6>
+			<div class="divider"></div>
+			<button class="btn waves-effect waves-light red accent-1 close-modal-warn">Answer Some Questions
+			</button>
+		</div>
+	</div>
+
+	<!-- Modal about  -->
 	<div id="modal-about" class="modal">
 		<div class="modal-content">
 			<h4>Nerd Finder by Rich Budek</h4>
 			<div class="divider"></div>
-			<h5>This is a multi-user app deployed on-line that takes users responses and stores them in a local page. Though not a dabase
-				it is sufficient to store past users and compare them to future ones. All data stored is just the users name and is for
+			<h5>This is an app for amusement only<br/>
+				<br/>It is a multi-user app deployed on-line
+				that takes users responses and stores them in a local page. 
+				Though not a dabase it is sufficient to store past users and compare them to future ones.<br/>
+				<br/>The data stored is just the users name and is for
 				demo purposes only.
 			</h5>
-			<button class="btn waves-effect waves-light" type="submit" name="action" id="abortButton2">Close
+			<button class="btn waves-effect waves-light btn-close-about" id="abortButton2">Close
+				<i class="material-icons right" style="font-size: 20px">close</i>
+			</button>
+			<button class="btn waves-effect waves-light right" id="techInfoButton">Tech Info
+				<i class="material-icons right" style="font-size: 20px">info</i>
 			</button>
 		</div>
 	</div>
+
+	<!-- Modal about tech -->
+	<div id="modal-about-tech" class="modal">
+		<div class="modal-content">
+			<h5>Technical info</h5>
+			<div class="divider"></div>
+			<h6>by Rich Budek
+				<br/>to demonstrate dynamic page programing
+				<br/>
+				<br/> Front end receives dynamic pages from NODE JS files
+				<br/> Backend on a NODE JS server
+				<br/> Server.JS app on backend is a REST API by Rich Budek
+				<br/> Java Script back end.
+				<br/> Communication between front end and back end is done with GET and PUT
+				<br/> Answers are stored in a local JSON text file.
+				<br/> CSS Styling by Materialize.
+				<br/> All HTML and CSS coding done manually by Rich Budek
+				<br/>
+			</h6>
+			<div class="divider"></div>
+			<button class="btn waves-effect waves-light btn-close-about" id="abortButton3">Close
+				<i class="material-icons right" style="font-size: 20px">close</i>
+			</button>
+		</div>
+	</div>
+
 
 	<script type="text/javascript">
 		var questArray = []; //need scope here so button click can work
@@ -183,6 +238,9 @@
 			photo: $('#userPhoto').val().trim(),
 			scores: []
 		};
+
+		var numBlank = 0;
+		var numQuest = 0;
 
 		$(document).ready(function () {
 			var questType = function (_quesText, _ansArray) {
@@ -360,21 +418,21 @@
 
 			$('select').material_select();
 
-			$('.modal').modal({
-				opacity: .5, // Opacity of modal background
-				startingTop: '4%', // Starting top style attribute
-				endingTop: '10%' // Ending top style attribute
-			});
-
-
 			// $('.modal').modal({
-			// 	dismissible: false, // Modal can be dismissed by clicking outside of the modal
 			// 	opacity: .5, // Opacity of modal background
-			// 	inDuration: 300, // Transition in duration
-			// 	outDuration: 200, // Transition out duration
 			// 	startingTop: '4%', // Starting top style attribute
 			// 	endingTop: '10%' // Ending top style attribute
 			// });
+
+
+			$('.modal').modal({
+				dismissible: false, // Modal can be dismissed by clicking outside of the modal
+				opacity: .5, // Opacity of modal background
+				inDuration: 300, // Transition in duration
+				outDuration: 200, // Transition out duration
+				startingTop: '4%', // Starting top style attribute
+				endingTop: '10%' // Ending top style attribute
+			});
 		});
 
 
@@ -385,29 +443,24 @@
 
 
 		var evalFriend = function () {
-			$.post('/api/friends', userInput)
-				.done(function (data) {
-					// console.log('response = ' + JSON.stringify(data));
+			if (numBlank >= numQuest) {
+				//tried to evaluate with all blanks
+				$('#modal-blank-fool').modal('open');
+			} else {
+				$.post('/api/friends', userInput)
+					.done(function (data) {
+						// console.log('response = ' + JSON.stringify(data));
 
-					// Set the name and image values of friend match
-					$('#userMatch').html(data.matchName);
-					$("#userMatchImage").attr("src", data.matchImage);
+						// Set the name and image values of friend match
+						$('#userMatch').html(data.matchName);
+						$("#userMatchImage").attr("src", data.matchImage);
 
-					// Pop open the modal dialog
-					$('#modal1').modal('open');
-				});
+						// Pop open the modal dialog
+						$('#modal1').modal('open');
+					});
+			};
 		};
 
-
-		$('#closeBlankPhotoButton').on('click', function (event) {
-			event.preventDefault();
-			$('#modal-blank-photo').modal('close');
-		});
-
-		$('#closeBlankNameButton').on('click', function (event) {
-			event.preventDefault();
-			$('#modal-blank-name').modal('close');
-		});
 
 		$('#abortButton').on('click', function (event) {
 			event.preventDefault();
@@ -419,9 +472,23 @@
 			$('#modal-about').modal('open');
 		});
 
-		$('#abortButton2').on('click', function (event) {
+		$('#techInfoButton').on('click', function (event) {
+			event.preventDefault();
+			$('#modal-about-tech').modal('open');
+		});
+
+		$('.btn-close-about').on('click', function (event) {
 			event.preventDefault();
 			$('#modal-about').modal('close');
+			$('#modal-about-tech').modal('close');
+		});
+
+		$('.close-modal-warn').on('click', function (event) {
+			event.preventDefault();
+			$('#modal-blank-name').modal('close');
+			$('#modal-blank-photo').modal('close');
+			$('#modal-blank-fool').modal('close');
+			$('#modal-blank').modal('close');
 		});
 
 		// Activate submit button
@@ -433,7 +500,7 @@
 			//can pass over thru an API call 
 			userInput.name = $("#userName").val().trim();
 			userInput.photo = $("#userPhoto").val().trim();
-			
+
 			if (userInput.name === "" || userInput.name === null) {
 				$("#modal-blank-name").modal("open");
 				return;
@@ -444,14 +511,16 @@
 				return;
 			};
 
+			numBlank = 0;
 			var missAns = false; //there are no missing answers
-			var endVal = questArray.length;
-			for (var i = 0; i < endVal; i++) {
+			numQuest = questArray.length;
+			for (var i = 0; i < numQuest; i++) {
 				var inpStr = $("#quest" + i);
 				var inpVal = inpStr.val().trim();
 				//if the answer is greater than 
 				if (inpVal.length > 1) {
 					inpVal = "BLANK";
+					numBlank++;
 					missAns = true;
 				};
 				userInput.scores.push(inpVal);
