@@ -2,7 +2,7 @@
 var friendsArray = [
 	{
 		name: 'Einstein',
-		photo: 'http://cdn3-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-15.jpg',
+		photo: 'images/Einstein.png',
 		scores: [
 			'1',
 			'5',
@@ -18,7 +18,7 @@ var friendsArray = [
 	},
 	{
 		name: 'Kim Kardashin',
-		photo: 'https://i.ytimg.com/vi/mRf3-JkwqfU/hqdefault.jpg',
+		photo: 'images/Kardashin',
 		scores: [
 			'2',
 			'4',
@@ -50,7 +50,7 @@ var friendsArray = [
 	},
 	{
 		name: 'Dr. Who',
-		photo: 'https://pbs.twimg.com/profile_images/562466745340817408/_nIu8KHX.jpeg',
+		photo: 'images/DrWho.png',
 		scores: [
 			'5',
 			'1',

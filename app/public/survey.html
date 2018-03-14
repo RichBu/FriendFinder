@@ -38,8 +38,8 @@
 					<li>
 						<a href="/api/friends">API Friends List</a>
 					</li>
-					<li>
-						<a href="https://github.com/RichBu/FriendFinder">GitHub Repo</a>
+					<li id="aboutOpen">
+						<a href="">About</a>
 					</li>
 				</ul>
 			</div>
@@ -70,7 +70,7 @@
 
 						<!-- Survey Submit Button -->
 						<div>
-							<button class="btn waves-effect waves-light" type="submit" name="action" id="submitButton">Submit Responses
+							<button class="btn waves-effect waves-light submit-bttn" type="submit" name="action" id="submitButton">Submit Responses
 								<i class="material-icons right">send</i>
 							</button>
 						</div>
@@ -124,13 +124,52 @@
 	<!-- Modal left answers blank -->
 	<div id="modal-blank" class="modal">
 		<div class="modal-content">
-			<h4>You left some answers blank for the best experience you should fill in all the answers. However, you can continue by clicking
-				the button below</h4>
+			<h5>You left some answers blank for the best experience you should fill in all the answers. However, you can continue by clicking
+				the button below</h5>
 			<div class="divider"></div>
 			<button class="btn waves-effect waves-light" type="submit" name="action" id="blankButton">Continue Anyhow
-				<i class="material-icons right">send</i>
 			</button>
-			<button class="btn waves-effect waves-light" type="submit" name="action" id="abortButton">Cancel
+			<button class="btn waves-effect waves-light right" type="submit" name="action" id="abortButton">Cancel
+			</button>
+		</div>
+	</div>
+
+	<!-- Modal blank name answers blank -->
+	<div id="modal-blank-name" class="modal red accent-2">
+		<div class="modal-content">
+			<h4>You left the name blank !
+				<i class="material-icons right" style="font-size: 50px">warning</i>
+			</h4>
+			<div class="divider"></div>
+			<button class="btn waves-effect waves-light red accent-1" type="submit" name="action" id="closeBlankNameButton">Continue
+			</button>
+		</div>
+	</div>
+
+	<!-- Modal blank photo answers blank -->
+	<div id="modal-blank-photo" class="modal red accent-2">
+		<div class="modal-content">
+			<h4>You left the photo image blank !
+				<i class="material-icons right" style="font-size: 50px">warning</i>
+			</h4>
+			<div class="divider"></div>
+			<h6>for testing just type anything in, just don't leave it blank</h6>
+			<div class="divider"></div>
+			<button class="btn waves-effect waves-light red accent-1" type="submit" name="action" id="closeBlankPhotoButton">Continue
+			</button>
+		</div>
+	</div>
+
+	<!-- Modal about blank -->
+	<div id="modal-about" class="modal">
+		<div class="modal-content">
+			<h4>Nerd Finder by Rich Budek</h4>
+			<div class="divider"></div>
+			<h5>This is a multi-user app deployed on-line that takes users responses and stores them in a local page. Though not a dabase
+				it is sufficient to store past users and compare them to future ones. All data stored is just the users name and is for
+				demo purposes only.
+			</h5>
+			<button class="btn waves-effect waves-light" type="submit" name="action" id="abortButton2">Close
 			</button>
 		</div>
 	</div>
@@ -302,6 +341,22 @@
 				$(inputDiv).appendTo(panelDiv);
 			};
 
+			//load the button
+			var buttonDiv = $("<div>");
+			var buttonTag = $("<button>");
+			$(buttonTag).addClass("btn waves-effect waves-light submit-bttn");
+			$(buttonTag).attr("type", "submit");
+			$(buttonTag).attr("name", "action");
+			$(buttonTag).attr("id", "submitButton2");
+			$(buttonTag).text("SUBMIT RESPONSES");
+			var iTag = $("<i>");
+			$(iTag).addClass("material-icons right");
+			$(iTag).text("send");
+			$(iTag).addClass("material-icons right");
+			$(iTag).appendTo(buttonTag);
+			$(buttonTag).appendTo(buttonDiv);
+			$(buttonDiv).appendTo(panelDiv);
+
 
 			$('select').material_select();
 
@@ -344,14 +399,33 @@
 		};
 
 
+		$('#closeBlankPhotoButton').on('click', function (event) {
+			event.preventDefault();
+			$('#modal-blank-photo').modal('close');
+		});
+
+		$('#closeBlankNameButton').on('click', function (event) {
+			event.preventDefault();
+			$('#modal-blank-name').modal('close');
+		});
+
 		$('#abortButton').on('click', function (event) {
 			event.preventDefault();
 			$('#modal-blank').modal('close');
 		});
-	
+
+		$('#aboutOpen').on('click', function (event) {
+			event.preventDefault();
+			$('#modal-about').modal('open');
+		});
+
+		$('#abortButton2').on('click', function (event) {
+			event.preventDefault();
+			$('#modal-about').modal('close');
+		});
 
 		// Activate submit button
-		$('#submitButton').on('click', function (event) {
+		$(document.body).on("click", ".submit-bttn", function (event) {
 			event.preventDefault();
 
 			//nove all of the answers to an array
@@ -359,15 +433,26 @@
 			//can pass over thru an API call 
 			userInput.name = $("#userName").val().trim();
 			userInput.photo = $("#userPhoto").val().trim();
+			
+			if (userInput.name === "" || userInput.name === null) {
+				$("#modal-blank-name").modal("open");
+				return;
+			};
+
+			if (userInput.photo === "" || userInput.photo === null) {
+				$("#modal-blank-photo").modal("open");
+				return;
+			};
+
 			var missAns = false; //there are no missing answers
 			var endVal = questArray.length;
 			for (var i = 0; i < endVal; i++) {
 				var inpStr = $("#quest" + i);
 				var inpVal = inpStr.val().trim();
 				//if the answer is greater than 
-				if (inpVal.length > 1) { 
+				if (inpVal.length > 1) {
 					inpVal = "BLANK";
-					missAns = true; 
+					missAns = true;
 				};
 				userInput.scores.push(inpVal);
 			};
