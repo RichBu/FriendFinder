@@ -54,22 +54,32 @@
 						<h1>Nerd Questions</h1>
 						<div class="divider"></div>
 						<h3>About You</h3>
-						<div class="input-field col s6">
-							<h5>Name
-								<br/>(Required)</h5>
-							<i class="material-icons prefix">account_circle</i>
-							<input type="text" class="validate" placeholder="Your Name Here" id="userName">
+						<div class="row">
+							<div class="input-field col s6">
+								<h5>Name
+									<br/>(Required)</h5>
+							</div>
+							<div class="input-field col s6">
+								<h5>Link to Photo
+									<br/>Image (Required)</h5>
+							</div>
 						</div>
-
-						<div class="input-field col s6">
-							<h5>Link to Photo
-								<br/>Image (Required)</h5>
-							<a href="" id="selectPict">
-								<i class="material-icons prefix">picture_in_picture</i>
-							</a>
-							<input type="text" class="validate" placeholder="Photo Link Here" id="userPhoto">
+						<div class="row">
+							<div class="col s1">
+								<i class="material-icons prefix">account_circle</i>
+							</div>
+							<div class="col s5">
+								<input type="text" class="validate" placeholder="Your Name Here" id="userName">
+							</div>
+							<div class="col s1">
+								<a href="" id="selectPict">
+									<i class="material-icons prefix">picture_in_picture</i>
+								</a>
+							</div>
+							<div class="col s5">
+								<input type="text" class="validate" placeholder="Photo Link Here" id="userPhoto">
+							</div>
 						</div>
-
 						<!-- Survey Submit Button -->
 						<div>
 							<button class="btn waves-effect waves-light submit-bttn" type="submit" name="action" id="submitButton">Submit Responses
@@ -93,10 +103,7 @@
 					<h5 class="white-text">Links</h5>
 					<ul>
 						<li>
-							<a class="grey-text text-lighten-3" href="/api/friends">API Friends List</a>
-						</li>
-						<li>
-							<a class="grey-text text-lighten-3" href="">GitHub Repo</a>
+							<a class="grey-text text-lighten-3" href="https://github.com/RichBu/FriendFinder">GitHub Repo</a>
 						</li>
 					</ul>
 				</div>
@@ -105,7 +112,7 @@
 		<div class="footer-copyright">
 			<div class="container">
 				© 2018 Rich Budek
-				<a class="grey-text text-lighten-4 right" href="">Reference Work- GitHub</a>
+				<a class="grey-text text-lighten-4 right" href="https://github.com/RichBu">Reference Work- GitHub</a>
 			</div>
 		</div>
 	</footer>
@@ -193,7 +200,7 @@
 			<div class="divider"></div>
 			<button class="btn waves-effect waves-light green accent-1 left">
 				<a href="" id="takePictModal">
-					<i class="material-icons prefix">picture_in_picture</i>
+					<i class="material-icons prefix">&#xE8FC;</i>  <!-- camera_in_camera  -->
 				</a>
 			</button>
 			<button class="btn waves-effect waves-light red accent-1 close-modal-warn right">Close
@@ -204,20 +211,21 @@
 
 
 	<!-- Modal take pict -->
-	<div id="modal-take-pict" class="modal green accent-2" style="height:1300px !important;">
+	<div id="modal-take-pict" class="modal green accent-2" style="height:1800px !important;">
 		<div class="modal-content">
 			<h4>Take a picture
 				<i class="material-icons right" style="font-size: 50px">warning</i>
 			</h4>
 			<div class="divider"></div>
 			<h6>your choices:</h6>
-			<video id="video" width="640" height="480" autoplay></video>
-			<canvas id="canvas" width="640" height="480"></canvas>
+			<video id="video" width="320" height="240" autoplay></video>
+			<canvas id="canvas" width="320" height="240"></canvas>
 			<img id="snap">
+			<h6>for demo of using video & taking a still, click the icon. it goes nowhere</h6>
 			<div class="divider"></div>
 			<button class="btn waves-effect waves-light green accent-1 left">
 				<a href="" id="snapButton">
-					<i class="material-icons prefix">picture_in_picture</i>
+					<i class="material-icons prefix">&#xE8FC;</i>
 				</a>
 			</button>
 			<!-- <button id="snapButton">Snap Photo</button> -->
@@ -519,6 +527,9 @@
 			var width = video.videoWidth,
 				height = video.videoHeight;
 
+			width = 320;
+			height = 240;
+
 			hidden_canvas.style.display = "block";
 			video.style.display = "block";
 
@@ -590,7 +601,7 @@
 				function (mediaStream) {
 					// Create an object URL for the video stream and
 					// set it as src of our HTLM video element.
-					//hidden_canvas.style.display = "none";
+					hidden_canvas.style.display = "none";
 					video.style.display = "block";
 					video.srcObject = mediaStream;
 					// Play the video element to show the stream to the user.
@@ -629,7 +640,7 @@
 
 			// Pause video playback of stream.
 			video.pause();
-			hidden_canvas.style.display = "block";
+			hidden_canvas.style.display = "none";
 			video.style.display = "none";
 
 		});
@@ -655,6 +666,8 @@
 				return;
 			};
 
+			//clear previous answers
+			while (userInput.scores.length) { userInput.scores.pop(); }
 			numBlank = 0;
 			var missAns = false; //there are no missing answers
 			numQuest = questArray.length;
