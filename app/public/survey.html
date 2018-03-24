@@ -229,7 +229,7 @@
 				</a>
 			</button>
 			<!-- <button id="snapButton">Snap Photo</button> -->
-			<button class="btn waves-effect waves-light red accent-1 close-modal-warn right">Close
+			<button class="btn waves-effect waves-light red accent-1 close-modal-pict right">Close
 				<i class="material-icons right" style="font-size: 20px">close</i>
 			</button>
 		</div>
@@ -588,6 +588,17 @@
 			$('#modal-blank').modal('close');
 			$('#modal-image-pick').modal('close');
 			$('#modal-take-pict').modal('close');
+		});
+
+		$('.close-modal-pict').on('click', function (event) {
+			event.preventDefault();
+			$('#modal-blank-name').modal('close');
+			$('#modal-blank-photo').modal('close');
+			$('#modal-blank-fool').modal('close');
+			$('#modal-blank').modal('close');
+			$('#modal-image-pick').modal('close');
+			$('#modal-take-pict').modal('close');
+			$('#userPhoto').val("camera image");
 		});
 
 
