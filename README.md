@@ -16,20 +16,20 @@ There is input validation on the user name and the photo name.
 
 Starting up, simply move to the website:
 The web page opens with an intro page:
-![Opening Screen](/app/assets/images/screen_caps/NF_main.png)
+![Opening Screen](/app/assets/screen_caps/NF_main.png)
 
 Hitting the survey button brings the user to the next page.
-![Starting the Survey](/app/assets/images/screen_caps/Nerd-quest_01.png)
+![Starting the Survey](/app/assets/screen_caps/Nerd-quest_01.png)
 
 The user should type in their user name.  if the user has a local image file, it can
 be selected:
-![Inquirer menu](/app/assets/images/screen_caps/Nerd-quest_01.png)
+![Inquirer menu](/app/assets/screen_caps/Nerd-quest_01.png)
 
 To view live video inside of the browser, the user can click the camera
 button and live video will be shown in the pop-up window.  Because of
 current hosting plan, the images are NOT uploaded and it is for
 demonstration purposes only.
-![Inquirer menu](/app/assets/images/screen_caps/NF-Video.png)
+![Inquirer menu](/app/assets/screen_caps/NF-Video.png)
 
 
 Technolgies used:
